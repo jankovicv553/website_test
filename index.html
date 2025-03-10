@@ -6,15 +6,27 @@
     <title>Redirecting...</title>
     <script>
         function openYouTube() {
-            const videoId = "LS8nAOUwWEQ"; 
+            const videoId = "LS8nAOUwWEQ"; // YouTube video ID
             const youtubeAppLink = "intent://www.youtube.com/watch?v=" + videoId + "#Intent;package=com.google.android.youtube;scheme=https;end;";
             const youtubeWebLink = "https://www.youtube.com/watch?v=" + videoId;
-            
-            window.location.href = youtubeAppLink;
 
-            setTimeout(() => {
+            // Provera za iOS
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+            if (isIOS) {
+                // iOS uređaji ne podržavaju intent linkove, pa odmah preusmeravamo na web verziju
                 window.location.href = youtubeWebLink;
-            }, 1500);
+            } else {
+                // Pokušaj otvaranja direktno u YouTube aplikaciji
+                window.location.href = youtubeAppLink;
+
+                // Ako korisnik nema aplikaciju, preusmeri na web verziju nakon 500ms
+                setTimeout(() => {
+                    if (!document.hidden) {
+                        window.location.href = youtubeWebLink;
+                    }
+                }, 500);
+            }
         }
     </script>
 </head>

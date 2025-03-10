@@ -6,21 +6,33 @@
     <title>Redirecting...</title>
     <script>
         function openYouTube() {
-            const videoId = "YOUR_VIDEO_ID"; // Zameni svojim YouTube ID-jem
+            const videoId = "LS8nAOUwWEQ"; 
             const youtubeAppLink = "vnd.youtube://" + videoId;
             const youtubeWebLink = "https://www.youtube.com/watch?v=" + videoId;
             
-            // Pokušaj otvaranja YouTube aplikacije
+            const isInstagram = navigator.userAgent.toLowerCase().includes("instagram");
+
+            if (isInstagram) {
+                document.getElementById("openApp").style.display = "block";
+            } else {
+                window.location.href = youtubeAppLink;
+
+                setTimeout(() => {
+                    window.location.href = youtubeWebLink;
+                }, 1000);
+            }
+        }
+
+        function forceOpenYouTube() {
+            const videoId = "LS8nAOUwWEQ";
+            const youtubeAppLink = "vnd.youtube://" + videoId;
             window.location.href = youtubeAppLink;
-            
-            // Ako aplikacija nije instalirana, otvori web verziju
-            setTimeout(() => {
-                window.location.href = youtubeWebLink;
-            }, 1000); // Pauza od 1s pre preusmeravanja na web verziju
         }
     </script>
 </head>
 <body onload="openYouTube()">
     <h1>Redirecting to YouTube...</h1>
+    <p>If you are not redirected, <a href="https://www.youtube.com/watch?v=LS8nAOUwWEQ">click here</a>.</p>
+    <button id="openApp" style="display: none;" onclick="forceOpenYouTube()">Open in YouTube App</button>
 </body>
 </html>

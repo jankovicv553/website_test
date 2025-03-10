@@ -14,8 +14,10 @@
             const isInstagram = navigator.userAgent.toLowerCase().includes("instagram");
 
             if (isInstagram) {
-                // Prikazujemo dugme umesto automatskog preusmeravanja
-                document.getElementById("openApp").style.display = "block";
+                // Prikazujemo dugme i pokušavamo da ga automatski kliknemo
+                const button = document.getElementById("openApp");
+                button.style.display = "block";
+                button.click(); // Simuliramo klik na dugme
             } else {
                 // Ako nismo u Instagramu, pokušaj odmah otvoriti YouTube aplikaciju
                 window.location.href = youtubeAppLink;

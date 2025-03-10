@@ -7,31 +7,44 @@
     <script>
         function openYouTube() {
             const videoId = "LS8nAOUwWEQ"; // YouTube video ID
-            const youtubeAppLink = "intent://www.youtube.com/watch?v=" + videoId + "#Intent;package=com.google.android.youtube;scheme=https;end;";
+            const youtubeAppLink = "vnd.youtube://watch?v=" + videoId;
             const youtubeWebLink = "https://www.youtube.com/watch?v=" + videoId;
 
-            // Provera za iOS
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            // Proveravamo da li smo unutar Instagrama
+            const isInstagram = navigator.userAgent.toLowerCase().includes("instagram");
 
-            if (isIOS) {
-                // iOS uređaji ne podržavaju intent linkove, pa odmah preusmeravamo na web verziju
-                window.open(youtubeWebLink, '_blank');
+            if (isInstagram) {
+                // Prikazujemo dugme umesto automatskog preusmeravanja
+                document.getElementById("openApp").style.display = "block";
             } else {
-                // Pokušaj otvaranja direktno u YouTube aplikaciji
+                // Ako nismo u Instagramu, pokušaj odmah otvoriti YouTube aplikaciju
                 window.location.href = youtubeAppLink;
 
-                // Ako korisnik nema aplikaciju, preusmeri na web verziju nakon 500ms
+                // Ako ne uspe, preusmeri na web verziju posle 1 sekunde
                 setTimeout(() => {
-                    if (!document.hidden) {
-                        window.location.href = youtubeWebLink;
-                    }
-                }, 500);
+                    window.location.href = youtubeWebLink;
+                }, 1000);
             }
+        }
+
+        function forceOpenYouTube() {
+            const videoId = "LS8nAOUwWEQ";
+            const youtubeAppLink = "vnd.youtube://watch?v=" + videoId;
+            const youtubeWebLink = "https://www.youtube.com/watch?v=" + videoId;
+
+            // Pokušaj otvoriti YouTube aplikaciju
+            window.location.href = youtubeAppLink;
+
+            // Ako aplikacija ne otvori video, preusmeri na web verziju posle 1 sekunde
+            setTimeout(() => {
+                window.location.href = youtubeWebLink;
+            }, 1000);
         }
     </script>
 </head>
 <body onload="openYouTube()">
     <h1>Redirecting to YouTube...</h1>
-    <p>If you are not redirected, <a href="https://www.youtube.com/watch?v=LS8nAOUwWEQ">click here</a>.</p>
+    <p>If you are not redirected, <a href="https://www.youtube.com/watch?v=LS8nAOUwWEQ" target="_blank">click here</a>.</p>
+    <button id="openApp" style="display: none;" onclick="forceOpenYouTube()">Open in YouTube App</button>
 </body>
 </html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting...</title>
+    <script>
+      function openYouTube() {
+        const videoId = "https://youtu.be/LS8nAOUwWEQ?si=eOekc5R9SK7Z9YvB"; // Zameni svojim YouTube ID-jem
+        const youtubeAppLink = "vnd.youtube://" + videoId;
+        const youtubeWebLink = "https://www.youtube.com/watch?v=" + videoId;
+
+        // Pokušaj otvaranja YouTube aplikacije
+        window.location.href = youtubeAppLink;
+
+        // Ako aplikacija nije instalirana, otvori web verziju
+        setTimeout(() => {
+          window.location.href = youtubeWebLink;
+        }, 1000); // Pauza od 1s pre preusmeravanja na web verziju
+      }
+    </script>
+  </head>
+  <body onload="openYouTube()">
+    <h1>Redirecting to YouTube...</h1>
+  </body>
+</html>
